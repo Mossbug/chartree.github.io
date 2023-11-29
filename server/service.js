@@ -7,7 +7,7 @@ var services = function (app) {
     app.post('/write-record', function (req, res) {
         var id = "lib" + Date.now();
 
-        var bookData = {
+        var characterData = {
             name: req.body.name,
             eyes: req.body.eyes,
             weight: req.body.weight,
@@ -20,6 +20,7 @@ var services = function (app) {
             personality: req.body.personality,
             bio: req.body.bio,
         };
+        console.log("data " + JSON.stringify(characterData));
         var charData = [];
 
         if (fs.existsSync(DATABASE_FILE)) {
@@ -29,22 +30,48 @@ var services = function (app) {
                     res.send(JSON.stringify({ msg: err }));
                 } else {
                     charData = JSON.parse(data);
-                    charData.push(charData);
+                    charData.push(characterData);
+
+                    fs.writeFile(DATABASE_FILE, JSON.stringify(charData), function (err) {
+                        if (err) {
+                            res.send(JSON.stringify({ msg: err }));
+                        } else {
+                            res.send(JSON.stringify({ msg: "SUCCESS" }));
+                        }
+                    });
                 }
             });
         } else {
-            charData.push(bookData);
+            charData.push(characterData);
 
             fs.writeFile(DATABASE_FILE, JSON.stringify(charData), function (err) {
                 if (err) {
                     res.send(JSON.stringify({ msg: err }));
                 } else {
-                    res.send(JSON.stringify({ msg: "SUCCESS" }))
+                    res.send(JSON.stringify({ msg: "SUCCESS" }));
                 }
             });
         }
     });
-};
 
+    app.get('/get-records', function (req, res) {
+        if (fs.existsSync(DATABASE_FILE)) {
+            fs.readFile(DATABASE_FILE, "utf8", function (err, data) {
+                if (err) {
+                    res.send(JSON.stringify({ msg: err }));
+                } else {
+                    var charData = JSON.parse(data);
+                    res.send(JSON.stringify({ msg: "SUCCESS", characterData: charData }));
+                }
+            });
+        } else {
+            var data = [];
+            res.send(JSON.stringify({ msg: "SUCCESS", characterData: data }));
+        }
+    });
+
+
+
+};
 
 module.exports = services;
