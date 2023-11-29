@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        Browse Data
+    </title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="/client/js/config.js"></script>
+    <script src='/client/js/browse-data.js'></script>
+</head>
+
+<body data-ng-app="browseCharactersApp" data-ng-controller="browseCharactersCtrl">
+    <!-- browseSpellsApp and browseSpellsCtrl -->
+
+    <div style="font-size: 30px; margin-left:20px;">
+
+        <div>
+            <label for="name">Name:</label>
+            <label id="name">{{obj.name}}</label>
+        </div>
+
+        <div>
+            <label for="eyes">Eye Color:</label>
+            <label id="eyes">{{obj.eyes}}</label>
+        </div>
+
+        <div>
+            <label for="weight">Weight:</label>
+            <label id="weight">{{obj.weight}}</label>
+        </div>
+        <div>
+            <label for="height">Height:</label>
+            <label id="height">{{obj.height}}</label>
+        </div>
+        <div>
+            <label for="age">Age:</label>
+            <label id="age">{{obj.age}}</label>
+        </div>
+        <div>
+            <label for="skin">Skin Color:</label>
+            <label id="skin">{{obj.skin}}</label>
+        </div>
+
+
+        <div>
+            <label for="hair">Hair Color:</label>
+            <label id="hair">{{obj.hair}}</label>
+        </div>
+
+        <div>
+            <label for="race">Race:</label>
+            <label id="race">{{obj.race}}</label>
+        </div>
+
+        <div>
+            <label for="looks">Other Characteristics:</label>
+            <label id="looks">{{obj.looks}}</label>
+        </div>
+
+        <div>
+            <label for="personality">Personality:</label>
+            <label id="personality">{{obj.personality}}</label>
+        </div>
+
+        <div>
+            <label for="bio">Backstory/Bio:</label>
+            <label id="bio">{{obj.bio}}</label>
+        </div>
+
+
+
+        <div style="float:left; clear:right; margin-top:30px; margin-left:30px; ">
+            <div style="float:left;">
+                <button id="previous" data-ng-click="changeData(-1)" data-ng-hide="hidePrev">&lt&lt&lt
+                    Previous</button>
+            </div>
+
+            <div style="float:left">
+                <button id="next" data-ng-click="changeData(1)">Next &gt&gt&gt</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+</body>
+
+</html>

@@ -1,25 +1,29 @@
-CTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
     <title>chartree</title>
-    <link rel="stylesheet" href="css/write-data.css">
-    <script src="js/write-data.js" async></script>
+
+    <link rel="stylesheet" href="/client/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/client/js/write-data.js" async></script>
+    <script src="/client/js/config.js"></script>
+
 </head>
 
 <body>
     <header>
-        <img src="images/logo.png" id="logo">
+        <img src="/client/images/logo.png" id="logo">
         <h1 id="headerText">CharTree</h1>
 
     </header>
-    <div class="tab" id="tab1"><a href="" class="tagText">Browse Data</a></div>
+    <div class="tab" id="tab1"><a href='/browse-data' class="tagText">Browse Data</a></div>
 
-    <div class="tab" id="tab2"><a href="viewData.html" class="tagText">View Data</a></div>
+    <div class="tab" id="tab2"><a href="/view-data" class="tagText">View Data</a></div>
 
-    <div class="tab" id="tab3"><a href="writeData.html" class="tagText">Enter Data</a></div>
+    <div class="tab" id="tab3"><a href="/write-data" class="tagText">Enter Data</a></div>
 
-    <div class="tab" id="tab4"><a href="index.html" class="tagText">Home</a></div>
+    <div class="tab" id="tab4"><a href="/home" class="tagText">Home</a></div>
 
 
     <div id="backboxData">
@@ -27,70 +31,70 @@ CTYPE html>
             <h1 class="bodyHeader">Add a new Character!</h1>
             <p class="bodyText"> Fill out the following inputs then select "submit" to create a new character </p>
         </div>
+        <form>
+            <div class="formGroup">
+                <label for="name" class="inputLabel">Name</label>
+                <input name="name" class="formInput" id="name">
+            </div>
 
-        <div class="formGroup">
-            <label for="name" class="inputLabel">Name</label>
-            <input name="name" class="formInput" id="name">
-        </div>
+            <div class="formGroup">
+                <label for="eyes" class="inputLabel">Eye Color</label>
+                <input name="eyes" class="formInput" id="eyes">
+            </div>
 
-        <div class="formGroup">
-            <label for="eyes" class="inputLabel">Eye Color</label>
-            <input name="eyes" class="formInput" id="eyes">
-        </div>
+            <div class="formGroup">
+                <label for="weight" class="inputLabel">Weight</label>
+                <input name="weight" class="formInput" id="weight">
+            </div>
 
-        <div class="formGroup">
-            <label for="weight" class="inputLabel">Weight</label>
-            <input name="weight" class="formInput" id="weight">
-        </div>
+            <div class="formGroup">
+                <label for="height" class="inputLabel">Height</label>
+                <input name="height" class="formInput" id="height">
+            </div>
 
-        <div class="formGroup">
-            <label for="height" class="inputLabel">Height</label>
-            <input name="height" class="formInput" id="height">
-        </div>
+            <div class="formGroup">
+                <label for="age" class="inputLabel">Age</label>
+                <input name="age" class="formInput" id="age">
+            </div>
 
-        <div class="formGroup">
-            <label for="age" class="inputLabel">Age</label>
-            <input name="age" class="formInput" id="age">
-        </div>
+            <div class="formGroup">
+                <label for="skin" class="inputLabel">Skin Color</label>
+                <input name="skin" class="formInput" id="skin">
+            </div>
 
-        <div class="formGroup">
-            <label for="skin" class="inputLabel">Skin Color</label>
-            <input name="skin" class="formInput" id="skin">
-        </div>
+            <div class="formGroup">
+                <label for="hair" class="inputLabel">Hair color</label>
+                <input name="hair" class="formInput" id="hair">
+            </div>
 
-        <div class="formGroup">
-            <label for="hair" class="inputLabel">Hair color</label>
-            <input name="hair" class="formInput" id="hair">
-        </div>
+            <div class="formGroup">
+                <label for="race" class="inputLabel">Race</label>
+                <input name="race" class="formInput" id="race">
+            </div>
 
-        <div class="formGroup">
-            <label for="race" class="inputLabel">Race</label>
-            <input name="race" class="formInput" id="race">
-        </div>
+            <div class="formGroup">
+                <label for="looks" class="inputLabel">Other Characteristics</label>
+                <textarea name="looks" class="longStringBox" id="looks"
+                    placeholder="Physical traits that dont fit into the categories above go here."></textarea>
+            </div>
 
-        <div class="formGroup">
-            <label for="looks" class="inputLabel">Other Characteristics</label>
-            <textarea name="looks" class="longStringBox" id="looks"
-                placeholder="Physical traits that dont fit into the categories above go here."></textarea>
-        </div>
+            <div class="formGroup">
+                <label for="personality" class="inputLabel">Personality</label>
+                <textarea name="personality" class="longStringBox" id="personality"
+                    placeholder="How does your character act around others?"></textarea>
+            </div>
 
-        <div class="formGroup">
-            <label for="personality" class="inputLabel">Personality</label>
-            <textarea name="personality" class="longStringBox" id="personality"
-                placeholder="How does your character act around others?"></textarea>
-        </div>
+            <div class="formGroup">
+                <label for="bio" class="inputLabel">Backstory/Bio</label>
+                <textarea name="bio" class="longStringBox" id="bio"
+                    placeholder="What events made your charcater who they are?"></textarea>
+            </div>
 
-        <div class="formGroup">
-            <label for="bio" class="inputLabel">Backstory/Bio</label>
-            <textarea name="bio" class="longStringBox" id="bio"
-                placeholder="What events made your charcater who they are?"></textarea>
-        </div>
-
-        <div id="buttonContainer">
-            <button class="formButtons" id="submit">Submit Character</button>
-            <button class="formButtons" id="clear">Clear</button>
-        </div>
-
+            <div id="buttonContainer">
+                <div class="formButtons" id="submit">Submit Character</div>
+                <div class="formButtons" id="clear">Clear</div>
+            </div>
+        </form>
     </div>
 </body>
 
