@@ -1,40 +1,33 @@
-// function to create the HTML table based on characterData
-function createCharacterTable(characterData) {
-    var tableHTML = '<colgroup><col class="col-xs-3"></colgroup>';
-    tableHTML += '<thead><tr><th>name</th><th>eyes</th><th>weight</th><th>height</th><th>age</th><th>skin</th><th>hair</th><th>race</th><th>looks</th><th>personality</th><th>bio</th></tr></thead><tbody>';
 
-    for (var i = 0; i < characterData.length; i++) {
-        tableHTML += '<tr>';
-        tableHTML += '<td>' + characterData[i].name + '</td>';
-        tableHTML += '<td>' + characterData[i].eyes + '</td>';
-        tableHTML += '<td>' + characterData[i].weight + '</td>';
-        tableHTML += '<td>' + characterData[i].height + '</td>';
-        tableHTML += '<td>' + characterData[i].age + '</td>';
-        tableHTML += '<td>' + characterData[i].skin + '</td>';
-        tableHTML += '<td>' + characterData[i].hair + '</td>';
-        tableHTML += '<td>' + characterData[i].race + '</td>';
-        tableHTML += '<td>' + characterData[i].looks + '</td>';
-        tableHTML += '<td>' + characterData[i].personality + '</td>';
-        tableHTML += '<td>' + characterData[i].bio + '</td>';
-        tableHTML += '<td><button class="delete-button" data-id="' + characterData[i].id + '">Delete</button></td>'; // Add the delete button
-        tableHTML += '</tr>';
+getData();
+
+
+function createCharacterTable(characterList) {
+    var tableHTML = "";
+    for (var i = 0; i < characterList.length; i++) {
+        tableHTML += '<div class="characterBox">';
+        tableHTML += '<h1 id="nameAge">' + characterList[i].name + ' - ' + characterList[i].age + '</h1>';
+        tableHTML += '<p id="raceHeightWeight">' + characterList[i].race + '/ ' + characterList[i].height + '/ ' + characterList[i].weight + '</p > ';
+        tableHTML += '<div class="bottomBox"><div class="looksBox">'
+        tableHTML += '<h1 class="subheader">Character Looks</h1>' + '<p id="eyes">eye-color:' + characterList[i].eyes + '</p>' + '<p id="skin">skin-color:' + characterList[i].skin + '</p>' + '<p id="hair">hair-color:' + characterList[i].hair + '</p>' + '<p id="looks">other-looks:' + characterList[i].looks + '</p></div>';
+        tableHTML += '<div class="loreBox">' + '<h1 class="subheader">Character Info</h1>' + '<p id="personality">personality:' + characterList[i].personality + '</p>' + '<p id="bio">bio/backstory:' + characterList[i].bio + '</p></div>';
+        tableHTML += '<button id="delete" class="deletebtn" data-id="' + characterList[i]._id + '">Delete</button>';
+        tableHTML += '</div></div>';
     }
 
-    tableHTML += '</tbody>';
 
-    document.getElementById('charTable').innerHTML = tableHTML;
-    activateDeleteButtonListeners();
+    document.getElementById('characterContainer').innerHTML = tableHTML;
+
 }
 
-// function to retrieve the character data from the server
-function retrieveData() {
+function getData() {
     $.ajax({
-        url: charTreeURL + '/get-records',
+        url: 'http://localhost:3000' + "/getData",
         type: 'get',
         success: function (response) {
             var data = JSON.parse(response);
             if (data.msg == "SUCCESS") {
-                createCharacterTable(data.characterData);
+                createCharacterTable(data.characterList);
             } else {
                 console.log(data.msg);
             }
@@ -45,35 +38,37 @@ function retrieveData() {
     })
 }
 
-retrieveData(); // call the function to retrieve and display the character table
+$(document).ready(function () {
+    $(document).on('click', '#delete', function () {
 
-// Function to activate listeners for delete buttons
-function activateDeleteButtonListeners() {
-    var deleteButtons = document.getElementsByClassName('delete-button');
-    for (var i = 0; i < deleteButtons.length; i++) {
-        deleteButtons[i].addEventListener('click', deleteRecord()); // Add event listener to delete button
-    }
-}
+        console.log("working here");
+        var deleteID = $(this).attr('data-id');
+        console.log(deleteID);
 
-// Function to handle delete record action
-function deleteRecord() {
-    var deleteID = $(this).closest("tr").attr("data-id");
+        if (!deleteID) {
+            console.log("Unable to delete character");
+            return;
+        }
 
-    $.ajax({
-        url: "/delete-record",
-        type: "DELETE",
-        data: { deleteID: deleteID },
-        success: function (response) {
-            var result = JSON.parse(response);
-            if (result.msg === "SUCCESS") {
-                // Refresh the table after deletion
-                retrieveCharacterData();
-            } else {
-                console.log(result.msg);
-            }
-        },
-        error: function (err) {
-            console.log(err);
+        var confirmData = confirm("Are you sure you'd like to delete this Character?");
+
+        if (confirmData) {
+            $.ajax({
+                url: '/deleteData',
+                type: 'delete',
+                data: { deleteItId: deleteID },
+                success: function (response) {
+                    var data = JSON.parse(response);
+                    if (data.msg === "SUCCESS") {
+                        getData();
+                    } else {
+                        console.log(data.msg);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
         }
     });
-};
+});

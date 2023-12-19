@@ -7,14 +7,29 @@
     </title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/client/css/style.css">
+
     <script src="/client/js/config.js"></script>
     <script src='/client/js/browse-data.js'></script>
 </head>
 
 <body data-ng-app="browseCharactersApp" data-ng-controller="browseCharactersCtrl">
+    <header>
+        <img src="/client/images/logo.png" id="logo">
+        <h1 id="headerText">CharTree</h1>
+
+    </header>
+    <div class="tab" id="tab1"><a href='/browse-data' class="tagText">Browse Data</a></div>
+
+    <div class="tab" id="tab2"><a href="/view-data" class="tagText">View Data</a></div>
+
+    <div class="tab" id="tab3"><a href="/write-data" class="tagText">Enter Data</a></div>
+
+    <div class="tab" id="tab4"><a href="/home" class="tagText">Home</a></div>
     <!-- browseSpellsApp and browseSpellsCtrl -->
 
-    <div style="font-size: 30px; margin-left:20px;">
+    <div class="browseBox">
 
         <div>
             <label for="name">Name:</label>

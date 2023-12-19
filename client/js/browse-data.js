@@ -7,13 +7,13 @@ app.controller('browseCharactersCtrl', function ($scope, $http) {
 
     $scope.obj = {};
 
-    $scope.get_records = function () {
+    $scope.getRecords = function () {
         $http({
             method: "get",
-            url: charTreeURL + "/get-records"
+            url: "http://localhost:3000" + "/getData"
         }).then(function (response) {
             if (response.data.msg === "SUCCESS") {
-                chars = response.data.characterData;
+                chars = response.data.characterList;
                 $scope.obj = chars[activeChar];
                 $scope.showHide();
             } else {
@@ -24,16 +24,20 @@ app.controller('browseCharactersCtrl', function ($scope, $http) {
         });
     };
 
-    $scope.get_records();
+    $scope.getRecords();
 
-    $scope.changeSpell = function (direction) {
+    $scope.changeData = function (direction) {
         activeChar += direction;
         $scope.obj = chars[activeChar];
         $scope.showHide();
-    }
+    };
 
     $scope.showHide = function () {
         $scope.hidePrev = (activeChar === 0) ? true : false;
         $scope.hideNext = (activeChar === chars.length - 1) ? true : false;
-    }
+    };
+});
+
+app.config(function ($httpProvider) {
+    $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 });

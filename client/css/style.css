@@ -74,6 +74,7 @@ h1,
 }
 
 #footer {
+
     z-index: 1;
     background: rgb(103, 119, 75);
     font-family: monospace;
@@ -85,6 +86,15 @@ h1,
     height: 3vh;
     padding-bottom: 0.5vh;
     padding-top: 0.5vh;
+
+}
+
+#footerData {
+    background: rgb(103, 119, 75);
+    margin-top: 10vh;
+    text-align: center;
+    font-family: monospace;
+    font-size: 2vh;
 }
 
 #backbox {
@@ -140,4 +150,126 @@ p,
     position: absolute;
     left: 10%;
     top: 58.5vh;
+}
+
+
+.characterBox {
+    margin-top: 2vh;
+    position: relative;
+    width: 90%;
+    background-color: rgb(159, 171, 135);
+    border-radius: 15px;
+    margin-left: 5%;
+
+}
+
+#nameAge {
+    font-size: 30px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+}
+
+.bottomBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+#delete {
+    font-size: 20px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+    background-color: rgb(126, 93, 93);
+
+}
+
+.looksBox {
+    padding-bottom: 2vh;
+    text-align: left;
+    padding-left: 5%;
+    flex-grow: 1;
+    background-color: rgb(186, 198, 163);
+}
+
+.loreBox {
+    padding-bottom: 2vh;
+    text-align: left;
+    background-color: rgb(186, 198, 163);
+    flex-grow: 1;
+}
+
+#raceHeightWeight {
+    text-align: left;
+    padding-left: 5%;
+}
+
+.subheader {
+    font-size: 20px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+}
+
+.inputLabel {
+    font-size: 20px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+}
+
+.formInput {
+    background-color: rgb(255, 244, 230);
+    font-size: 15px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+    border-radius: 5px;
+}
+
+.longStringBox {
+    background-color: rgb(255, 244, 230);
+    font-size: 15px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+    border-radius: 5px;
+}
+
+.formBox {
+    margin-left: 26%;
+    width: 40%;
+    align-items: center;
+    padding: 2vh;
+    background-color: rgb(159, 171, 135);
+    border-radius: 15px;
+    margin-right: auto;
+}
+
+.btn {
+    margin: 2vh;
+    padding: 1vh;
+    background-color: rgb(255, 244, 230);
+    font-size: 15px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+    border-radius: 5px;
+}
+
+.browseBox {
+    padding: 2vh;
+    background-color: rgb(159, 171, 135);
+    position: absolute;
+    top: 20vh;
+    left: 30%;
+    width: 30%;
+    height: 50%;
+    font-size: 20px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+    border-radius: 10px
+}
+
+.browseBox button {
+    font-size: 15px;
+    font-family: FreeMono, monospace;
+    color: rgb(63, 50, 39);
+    background-color: rgb(159, 171, 135);
+    border-radius: 5px;
 }

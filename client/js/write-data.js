@@ -1,4 +1,5 @@
-$('#submit').click(function () {
+$('#submitbtn').click(function () {
+
     var name = $('#name').val();
     var eyes = $('#eyes').val();
     var weight = $('#weight').val();
@@ -10,6 +11,7 @@ $('#submit').click(function () {
     var looks = $('#looks').val();
     var personality = $('#personality').val();
     var bio = $('#bio').val();
+
 
     var jsonObject = {
         name: name,
@@ -23,12 +25,12 @@ $('#submit').click(function () {
         looks: looks,
         personality: personality,
         bio: bio
-
     };
+
     console.log(JSON.stringify(jsonObject));
     $.ajax({
-        url: charTreeURL + "/write-record",
-        type: "post",
+        method: 'post',
+        url: charTreeURL + "/writeData",
         data: jsonObject,
         success: function (response) {
             var data = JSON.parse(response);
@@ -43,9 +45,12 @@ $('#submit').click(function () {
             console.log(err);
         }
     });
+    return false;
+
 });
 
-$('#data-clear').click(function () {
+$('#clearbtn').click(function () {
+
     $('#name').val("");
     $('#eyes').val("");
     $('#weight').val("");

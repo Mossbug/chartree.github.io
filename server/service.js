@@ -1,13 +1,13 @@
+const { MongoClient, ObjectID } = require('mongodb');
 const fs = require('fs');
 const path = require('path');
 
-const DATABASE_FILE = path.join(__dirname, './files/data.txt');
+
 
 var services = function (app) {
-    app.post('/write-record', function (req, res) {
-        var id = "lib" + Date.now();
+    app.post('/writeData', function (req, res) {
 
-        var characterData = {
+        var characterList = {
             name: req.body.name,
             eyes: req.body.eyes,
             weight: req.body.weight,
@@ -18,60 +18,54 @@ var services = function (app) {
             race: req.body.race,
             looks: req.body.looks,
             personality: req.body.personality,
-            bio: req.body.bio,
+            bio: req.body.bio
         };
-        console.log("data " + JSON.stringify(characterData));
-        var charData = [];
 
-        if (fs.existsSync(DATABASE_FILE)) {
-            //Read in current database
-            fs.readFile(DATABASE_FILE, "utf8", function (err, data) {
-                if (err) {
-                    res.send(JSON.stringify({ msg: err }));
-                } else {
-                    charData = JSON.parse(data);
-                    charData.push(characterData);
 
-                    fs.writeFile(DATABASE_FILE, JSON.stringify(charData), function (err) {
-                        if (err) {
-                            res.send(JSON.stringify({ msg: err }));
-                        } else {
-                            res.send(JSON.stringify({ msg: "SUCCESS" }));
-                        }
-                    });
-                }
-            });
-        } else {
-            charData.push(characterData);
+        const collection = db.collection('characterList');
 
-            fs.writeFile(DATABASE_FILE, JSON.stringify(charData), function (err) {
-                if (err) {
-                    res.send(JSON.stringify({ msg: err }));
-                } else {
-                    res.send(JSON.stringify({ msg: "SUCCESS" }));
-                }
-            });
-        }
+        collection.insertOne(characterList, function (err, result) {
+            if (err) {
+                res.send(JSON.stringify({ msg: err }));
+            } else {
+                res.send(JSON.stringify({ msg: "SUCCESS" }));
+            }
+        });
     });
 
-    app.get('/get-records', function (req, res) {
-        if (fs.existsSync(DATABASE_FILE)) {
-            fs.readFile(DATABASE_FILE, "utf8", function (err, data) {
-                if (err) {
-                    res.send(JSON.stringify({ msg: err }));
-                } else {
-                    var charData = JSON.parse(data);
-                    res.send(JSON.stringify({ msg: "SUCCESS", characterData: charData }));
-                }
-            });
-        } else {
-            var data = [];
-            res.send(JSON.stringify({ msg: "SUCCESS", characterData: data }));
-        }
+    app.get('/getData', function (req, res) {
+        const collection = db.collection('characterList');
+
+        collection.find().toArray(function (err, data) {
+            if (err) {
+                res.send(JSON.stringify({ msg: err }));
+            } else {
+                res.send(JSON.stringify({ msg: "SUCCESS", characterList: data }));
+            }
+        });
     });
 
+    app.delete('/deleteData', async (req, res) => {
+        const characterList = db.collection('characterList');
+        try {
+            const deleteItId = req.body.deleteItId;
+            var d_id = new ObjectID(deleteItId);
+            const deletedItem = await characterList.deleteOne({ _id: d_id });
+
+            res.send(JSON.stringify({ msg: "SUCCESS" }));
+            console.log("Character deleted:", deletedItem);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('An error occurred while deleting the character.');
+        }
+
+    });
 
 
 };
+
+
+
+
 
 module.exports = services;
