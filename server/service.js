@@ -47,8 +47,9 @@ var services = function (app) {
 
     app.delete('/deleteData', async (req, res) => {
         const characterList = db.collection('characterList');
+
         try {
-            const deleteItId = req.body.deleteItId;
+            const deleteItId = req.query.deleteItId;
             var d_id = new ObjectID(deleteItId);
             const deletedItem = await characterList.deleteOne({ _id: d_id });
 
@@ -58,7 +59,66 @@ var services = function (app) {
             console.error(error);
             res.status(500).send('An error occurred while deleting the character.');
         }
+    });
 
+    //This is my get by type server listener
+    app.get('/filterRace', async (req, res) => {
+        const race = req.query.race; // Get the selected race from the request query
+
+        try {
+            const collection = db.collection('characterList');
+            const characters = await collection.find({ race: race }).toArray();
+
+            res.json({ msg: "SUCCESS", characterList: characters });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ msg: "An error occurred while retrieving characters by race" });
+        }
+    });
+
+    app.put('/updateData', async (req, res) => {
+        try {
+            const characterList = db.collection('characterList');
+            const charID = req.body.charID;
+
+            const {
+                name,
+                eyes,
+                weight,
+                height,
+                age,
+                skin,
+                hair,
+                race,
+                looks,
+                personality,
+                bio
+            } = req.body;
+
+            const updateItem = await characterList.updateOne(
+                { _id: ObjectID(charID) },
+                {
+                    $set: {
+                        name,
+                        eyes,
+                        weight,
+                        height,
+                        age,
+                        skin,
+                        hair,
+                        race,
+                        looks,
+                        personality,
+                        bio
+                    }
+                }
+            );
+
+            res.send(JSON.stringify({ msg: "SUCCESS" }));
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('An error occurred while updating the character.');
+        }
     });
 
 

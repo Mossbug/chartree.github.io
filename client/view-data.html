@@ -5,25 +5,19 @@
     <title>chartree</title>
     <link rel="stylesheet" href="/client/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/client/js/view-data.js" async></script>
     <script src="/client/js/config.js"></script>
 </head>
 
-<body>
+<body data-ng-app="charTreeViewApp" data-ng-controller="viewDataCtrl">
     <header>
         <img src="/client/images/logo.png" id="logo">
         <h1 id="headerText">CharTree</h1>
-
     </header>
+
     <div class="tab" id="tab1"><a href='/browse-data' class="tagText">Browse Data</a></div>
-
     <div class="tab" id="tab2"><a href="/view-data" class="tagText">View Data</a></div>
-
     <div class="tab" id="tab3"><a href="/write-data" class="tagText">Enter Data</a></div>
-
     <div class="tab" id="tab4"><a href="/home" class="tagText">Home</a></div>
-
-
 
     <div id="backboxData">
         <div class="textBody">
@@ -31,17 +25,128 @@
             <p class="bodyText"> Here you can see all your characters! </p>
         </div>
 
+        <div class="groupBtn">
+            <label for="groupby">Race:</label>
+            <select id="groupby" data-ng-model="selectedRace" data-ng-options="race.display for race in races"
+                data-ng-change="redrawTable()">
+            </select>
+        </div>
 
         <div id="characterContainer">
-
+            <div class="characterBox" ng-repeat="obj in characterList">
+                <h1 id="nameAge">{{obj.name}} - {{obj.age}}</h1>
+                <p id="raceHeightWeight">{{obj.race}} / {{obj.height}} / {{obj.weight}}</p>
+                <div class="bottomBox">
+                    <div class="looksBox">
+                        <h1 class="subheader">Character Looks</h1>
+                        <p id="eyes">eye-color: {{obj.eyes}}</p>
+                        <p id="skin">skin-color: {{obj.skin}}</p>
+                        <p id="hair">hair-color: {{obj.hair}}</p>
+                        <p id="looks">other-looks: {{obj.looks}}</p>
+                    </div>
+                    <div class="loreBox">
+                        <h1 class="subheader">Character Info</h1>
+                        <p id="personality">personality: {{obj.personality}}</p>
+                        <p id="bio">bio/backstory: {{obj.bio}}</p>
+                    </div>
+                    <button id="delete" class="deletebtn" ng-click="deleteCharacter(obj._id)">Delete</button>
+                    <button id="edit" data-ng-click="editData($index)">EDIT</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <section data-ng-hide="hideForm">
+        <div id="popupEdit">
+            <form>
+                <label data-ng-model="characterIDHidden" hidden></label>
+                <div class="formGroup">
+                    <div class="formGroup">
+                        <label for="name" class="inputLabel">Name</label>
+                        <input name="name" class="formInput" id="name" data-ng-model="name">
+                    </div>
+
+                    <label for="eyes" class="inputLabel">Eye Color</label>
+                    <input name="eyes" class="formInput" id="eyes" data-ng-model="eyes">
+                </div>
+
+                <div class="formGroup">
+                    <label for="weight" class="inputLabel">Weight</label>
+                    <input name="weight" class="formInput" id="weight" data-ng-model="weight">
+                </div>
+
+                <div class="formGroup">
+                    <label for="height" class="inputLabel">Height</label>
+                    <input name="height" class="formInput" id="height" data-ng-model="height" \>
+                </div>
+
+                <div class="formGroup">
+                    <label for="age" class="inputLabel">Age</label>
+                    <input name="age" class="formInput" id="age" data-ng-model="age">
+                </div>
+
+                <div class="formGroup">
+                    <label for="skin" class="inputLabel">Skin Color</label>
+                    <input name="skin" class="formInput" id="skin" data-ng-model="skin">
+                </div>
+
+                <div class="formGroup">
+                    <label for="hair" class="inputLabel">Hair color</label>
+                    <input name="hair" class="formInput" id="hair" data-ng-model="hair">
+                </div>
+
+                <div class="formGroup">
+                    <label for="race" class="inputLabel">Race</label>
+                    <select name="race" class="formInput" id="race" data-ng-model="race">
+                        <option value="dwarf">Dwarf</option>
+                        <option value="elf">Elf</option>
+                        <option value="malaphos">Malaphos</option>
+                        <option value="halfling">Halfling</option>
+                        <option value="human">Human</option>
+                        <option value="dragonborn">Dragonborn</option>
+                        <option value="gnome">Gnome</option>
+                        <option value="half-elf">Half-Elf</option>
+                        <option value="half-orc">Half-Orc</option>
+                        <option value="weilglyn">Weilglyn</option>
+                    </select>
+                </div>
+
+                <div class="formGroup">
+                    <label for="looks" class="inputLabel">Other Characteristics</label>
+                    <textarea name="looks" class="longStringBox" id="looks"
+                        placeholder="Physical traits that dont fit into the categories above go here."
+                        data-ng-model="looks" placeholder="{{looks}}"></textarea>
+                </div>
+
+                <div class="formGroup">
+                    <label for="personality" class="inputLabel">Personality</label>
+                    <textarea name="personality" class="longStringBox" id="personality"
+                        placeholder="How does your character act around others?" data-ng-model="personality"
+                        placeholder="{{personality}}"></textarea>
+                </div>
+
+                <div class="formGroup">
+                    <label for="bio" class="inputLabel">Backstory/Bio</label>
+                    <textarea name="bio" class="longStringBox" id="bio"
+                        placeholder="What events made your charcater who they are?" data-ng-model="bio"
+                        placeholder="{{bio}}"></textarea>
+                </div>
+
+                <div id="buttonContainer">
+                    <button id="submitBtnEdit" class="btn" data-ng-click="updateCharacter()">submit</button>
+                    <button id=" clearbtn" class="btn" data-ng-click="cancelUpdate()">cancel</button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <h1 id="footerData">-:- Chris Yurga -:-</h1>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="/client/js/view-data.js"></script>
 </body>
-
-<footer>
-
-    <h1 id="footerData">-:- Chris Yurga -:-</h1>
-
-</footer>
 
 </html>

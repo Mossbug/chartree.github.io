@@ -35,7 +35,7 @@ $('#submitbtn').click(function () {
         success: function (response) {
             var data = JSON.parse(response);
             if ((data.msg) == "SUCCESS") {
-                alert("Data successfully saved");
+                return;
             } else {
                 console.log(data.msg);
             }
